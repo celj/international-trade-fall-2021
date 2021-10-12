@@ -1,0 +1,70 @@
+---
+title: "International Trade: Assignment 1"
+runningheader: "Assignment 1"
+author: |
+  Carlos Lezama, Marco Hinojosa, \
+  Luis Jiménez and Antonio Carbonell
+date: "October 27th, 2021"
+output:
+  tufte::tufte_handout:
+    citation_package: natbib
+bibliography: skeleton.bib
+link-citations: yes
+---
+
+```{r setup, include=FALSE}
+library(tufte)
+library(tidyverse)
+
+knitr::opts_chunk$set(
+  cache.extra = packageVersion('tufte'),
+  cache = TRUE,
+  fig.height = 8,
+  fig.pos = '!h',
+  fig.width = 8,
+  message = FALSE,
+  out.extra = '',
+  out.width = '75%',
+  warning = FALSE
+)
+
+options(htmltools.dir.version = FALSE)
+```
+
+# Patterns of trade
+
+```{r data, echo=FALSE}
+# Data import
+data <- read.csv("data/world-bank.csv") %>%
+  slice(-c(6:10))
+data <- data[-c(1:4)]
+
+# Columns rename
+names(data) <- c(1960:2020)
+
+# Variables
+gdp <- data[1, ]
+merchExports <- data[2, ]
+merchImports <- data[3, ]
+goods_and_servicesExports <- data[4, ]
+goods_and_servicesImports <- data[5, ]
+
+# Important ratios
+merchExportsGPD <- merchExports / gdp
+merchImportsGPD <- merchImports / gdp
+merchGDP <- (merchExports  + merchImports) / gdp
+```
+
+\newpage
+
+# Export and import wedges
+
+\newpage
+
+# Heckscher–Ohlin
+
+\newpage
+
+```{r bib, include=FALSE}
+knitr::write_bib(c('base', 'rmarkdown'), file = 'skeleton.bib')
+```

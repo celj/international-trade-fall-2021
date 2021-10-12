@@ -1,0 +1,44 @@
+---
+title: "International Trade: Assignment #"
+runningheader: "Assignment #"
+author: |
+  Carlos Lezama, Marco Hinojosa, \
+  Luis Jiménez and Antonio Carbonell
+date: "Due date"
+output:
+  tufte::tufte_handout:
+    citation_package: natbib
+bibliography: skeleton.bib
+link-citations: yes
+---
+
+```{r setup, include=FALSE}
+library(tufte)
+library(tidyverse)
+
+knitr::opts_chunk$set(
+  cache.extra = packageVersion('tufte'),
+  cache = TRUE,
+  fig.height = 8,
+  fig.pos = '!h',
+  fig.width = 8,
+  message = FALSE,
+  out.extra = '',
+  out.width = '75%',
+  warning = FALSE
+)
+
+options(htmltools.dir.version = FALSE)
+```
+
+# Subtitle 1
+
+\newpage
+
+# Subtitle 2
+
+\newpage
+
+```{r bib, include=FALSE}
+knitr::write_bib(c('base', 'rmarkdown'), file = 'skeleton.bib')
+```
