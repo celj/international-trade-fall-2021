@@ -19,12 +19,12 @@ library(tidyverse)
 knitr::opts_chunk$set(
   cache.extra = packageVersion('tufte'),
   cache = TRUE,
-  fig.height = 8,
+  fig.height = 6,
   fig.pos = '!h',
   fig.width = 8,
   message = FALSE,
   out.extra = '',
-  out.width = '75%',
+  out.width = '100%',
   warning = FALSE
 )
 
@@ -33,31 +33,252 @@ options(htmltools.dir.version = FALSE)
 
 # Patterns of trade
 
-```{r data, echo=FALSE}
+```{r data.1, echo=FALSE}
 # Data import
-data <- read.csv("data/world-bank.csv") %>%
+data.1 <- read.csv("data/world-bank.csv") %>%
   slice(-c(6:10))
-data <- data[-c(1:4)]
+data.1 <- data.1[-c(1:4)]
 
 # Columns rename
-names(data) <- c(1960:2020)
+names(data.1) <- c(1960:2020)
 
 # Variables
-gdp <- data[1, ]
-merchExports <- data[2, ]
-merchImports <- data[3, ]
-goods_and_servicesExports <- data[4, ]
-goods_and_servicesImports <- data[5, ]
+gdp <- data.1[1, ]
+merchExports <- data.1[2, ]
+merchImports <- data.1[3, ]
+goods_and_servicesExports <- data.1[4, ]
+goods_and_servicesImports <- data.1[5, ]
+```
 
-# Important ratios
-merchExportsGPD <- merchExports / gdp
-merchImportsGPD <- merchImports / gdp
-merchGDP <- (merchExports  + merchImports) / gdp
+```{r merchandise, echo=FALSE, fig.fullwidth=TRUE, fig.width=12, fig.height=5.5}
+# Important merchandise ratios
+merchExportsGDP <- t(merchExports / gdp)
+merchImportsGDP <- t(merchImports / gdp)
+merchGDP <- t((merchExports  + merchImports) / gdp)
+merchandise <- data.frame(merchExportsGDP, merchImportsGDP, merchGDP)
+
+# Mean before and after NAFTA
+ratio1.before <- mean(merchGDP[as.character(c(1960:1993)), ])
+ratio1.after <- mean(merchGDP[as.character(c(1994:2011)), ])
+
+ratio2.before <- mean(merchExportsGDP[as.character(c(1960:1993)), ])
+ratio2.after <- mean(merchExportsGDP[as.character(c(1994:2011)), ])
+
+ratio3.before <- mean(merchImportsGDP[as.character(c(1960:1993)), ])
+ratio3.after <- mean(merchImportsGDP[as.character(c(1994:2011)), ])
+
+colours <-
+  c(
+    "Merchandise trade to GDP" = "black",
+    "Merchandise exports to GDP" = "#bf616a",
+    "Merchandise imports to GDP" = "#5e81ac"
+  )
+
+# Plot
+ratio.plot <- ggplot(merchandise) +
+  geom_line(aes(
+    x = as.numeric(row.names(merchandise)),
+    y = merchGDP,
+    colour = "Merchandise trade to GDP"
+  )) +
+  geom_line(aes(
+    x = as.numeric(row.names(merchandise)),
+    y = merchExportsGDP,
+    colour = "Merchandise exports to GDP"
+  )) +
+  geom_line(aes(
+    x = as.numeric(row.names(merchandise)),
+    y = merchImportsGDP,
+    colour = "Merchandise imports to GDP"
+  )) +
+  geom_segment(
+    aes(
+      x = 1960,
+      xend = 1993,
+      y = ratio1.before,
+      yend = ratio1.before,
+      color = "Merchandise trade to GDP"
+    ),
+    linetype = "dashed"
+  ) +
+  geom_segment(
+    aes(
+      x = 1994,
+      xend = 2011,
+      y = ratio1.after,
+      yend = ratio1.after,
+      color = "Merchandise trade to GDP"
+    ),
+    linetype = "dashed"
+  ) +
+  geom_segment(
+    aes(
+      x = 1960,
+      xend = 1993,
+      y = ratio2.before,
+      yend = ratio2.before,
+      color = "Merchandise exports to GDP"
+    ),
+    linetype = "dashed"
+  ) +
+  geom_segment(
+    aes(
+      x = 1994,
+      xend = 2011,
+      y = ratio2.after,
+      yend = ratio2.after,
+      color = "Merchandise exports to GDP"
+    ),
+    linetype = "dashed"
+  ) +
+  geom_segment(
+    aes(
+      x = 1960,
+      xend = 1993,
+      y = ratio3.before,
+      yend = ratio3.before,
+      color = "Merchandise imports to GDP"
+    ),
+    linetype = "dashed"
+  ) +
+  geom_segment(
+    aes(
+      x = 1994,
+      xend = 2011,
+      y = ratio3.after,
+      yend = ratio3.after,
+      color = "Merchandise imports to GDP"
+    ),
+    linetype = "dashed"
+  ) +
+  scale_x_continuous(breaks = seq(1960, 2020, by = 10)) +
+  labs(x = "year", y = "ratio") +
+  scale_colour_manual(name = "Ratios", values = colours) +
+  theme_minimal()
+
+ratio.plot
+```
+
+```{r services, echo=FALSE, fig.fullwidth=TRUE, fig.width=12, fig.height=5.5}
+# Important services ratios
+servExportsGDP <- t(merchExports / gdp)
+servImportsGDP <- t(merchImports / gdp)
+servGDP <- t((merchExports  + merchImports) / gdp)
+services <- data.frame(servExportsGDP, servImportsGDP, servGDP)
+
+# Mean before and after NAFTA
+ratio1.before <- mean(servGDP[as.character(c(1960:1993)), ])
+ratio1.after <- mean(servGDP[as.character(c(1994:2011)), ])
+
+ratio2.before <- mean(servExportsGDP[as.character(c(1960:1993)), ])
+ratio2.after <- mean(servExportsGDP[as.character(c(1994:2011)), ])
+
+ratio3.before <- mean(servImportsGDP[as.character(c(1960:1993)), ])
+ratio3.after <- mean(servImportsGDP[as.character(c(1994:2011)), ])
+
+colours <-
+  c(
+    "services trade to GDP" = "black",
+    "services exports to GDP" = "#bf616a",
+    "services imports to GDP" = "#5e81ac"
+  )
+
+# Plot
+ratio.plot <- ggplot(services) +
+  geom_line(aes(
+    x = as.numeric(row.names(services)),
+    y = servGDP,
+    colour = "services trade to GDP"
+  )) +
+  geom_line(aes(
+    x = as.numeric(row.names(services)),
+    y = servExportsGDP,
+    colour = "services exports to GDP"
+  )) +
+  geom_line(aes(
+    x = as.numeric(row.names(services)),
+    y = servImportsGDP,
+    colour = "services imports to GDP"
+  )) +
+  geom_segment(
+    aes(
+      x = 1960,
+      xend = 1993,
+      y = ratio1.before,
+      yend = ratio1.before,
+      color = "services trade to GDP"
+    ),
+    linetype = "dashed"
+  ) +
+  geom_segment(
+    aes(
+      x = 1994,
+      xend = 2011,
+      y = ratio1.after,
+      yend = ratio1.after,
+      color = "services trade to GDP"
+    ),
+    linetype = "dashed"
+  ) +
+  geom_segment(
+    aes(
+      x = 1960,
+      xend = 1993,
+      y = ratio2.before,
+      yend = ratio2.before,
+      color = "services exports to GDP"
+    ),
+    linetype = "dashed"
+  ) +
+  geom_segment(
+    aes(
+      x = 1994,
+      xend = 2011,
+      y = ratio2.after,
+      yend = ratio2.after,
+      color = "services exports to GDP"
+    ),
+    linetype = "dashed"
+  ) +
+  geom_segment(
+    aes(
+      x = 1960,
+      xend = 1993,
+      y = ratio3.before,
+      yend = ratio3.before,
+      color = "services imports to GDP"
+    ),
+    linetype = "dashed"
+  ) +
+  geom_segment(
+    aes(
+      x = 1994,
+      xend = 2011,
+      y = ratio3.after,
+      yend = ratio3.after,
+      color = "services imports to GDP"
+    ),
+    linetype = "dashed"
+  ) +
+  scale_x_continuous(breaks = seq(1960, 2020, by = 10)) +
+  labs(x = "year", y = "ratio") +
+  scale_colour_manual(name = "Ratios", values = colours) +
+  theme_minimal()
+
+ratio.plot
+```
+
+```{r data.2, echo=FALSE}
+data.2 <- read.csv("data/WITS.csv")
 ```
 
 \newpage
 
 # Export and import wedges
+
+```{r data.3, echo=FALSE}
+data.3 <- read.csv("data/OECD.csv")
+```
 
 \newpage
 
