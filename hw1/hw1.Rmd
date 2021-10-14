@@ -1,10 +1,10 @@
 ---
-title: "International Trade: Assignment 1"
-runningheader: "Assignment 1"
+title: 'International Trade: Assignment 1'
+runningheader: 'Assignment 1'
 author: |
   Carlos Lezama, Marco Hinojosa, \
   Luis Jiménez and Antonio Carbonell
-date: "October 27th, 2021"
+date: 'October 27th, 2021'
 output:
   tufte::tufte_handout:
     citation_package: natbib
@@ -15,13 +15,17 @@ link-citations: yes
 ```{r setup, include=FALSE}
 library(tufte)
 library(tidyverse)
+library(knitr)
+library(ggcorrplot)
 
 knitr::opts_chunk$set(
   cache.extra = packageVersion('tufte'),
-  cache = TRUE,
+  cache = FALSE,
+  echo = FALSE,
+  fig.fullwidth=TRUE,
   fig.height = 6,
   fig.pos = '!h',
-  fig.width = 8,
+  fig.width = 12,
   message = FALSE,
   out.extra = '',
   out.width = '100%',
@@ -33,9 +37,13 @@ options(htmltools.dir.version = FALSE)
 
 # Patterns of trade
 
-```{r data.1, echo=FALSE}
+## (a)
+
+**i. and ii.**
+
+```{r data.1}
 # Data import
-data.1 <- read.csv("data/world-bank.csv") %>%
+data.1 <- read.csv('data/world-bank.csv') %>%
   slice(-c(6:10))
 data.1 <- data.1[-c(1:4)]
 
@@ -50,7 +58,7 @@ goods_and_servicesExports <- data.1[4, ]
 goods_and_servicesImports <- data.1[5, ]
 ```
 
-```{r merchandise, echo=FALSE, fig.fullwidth=TRUE, fig.width=12, fig.height=5.5}
+```{r merchandise}
 # Important merchandise ratios
 merchExportsGDP <- t(merchExports / gdp)
 merchImportsGDP <- t(merchImports / gdp)
@@ -69,27 +77,27 @@ ratio3.after <- mean(merchImportsGDP[as.character(c(1994:2011)), ])
 
 colours <-
   c(
-    "Merchandise trade to GDP" = "black",
-    "Merchandise exports to GDP" = "#bf616a",
-    "Merchandise imports to GDP" = "#5e81ac"
+    'Merchandise trade to GDP' = '#051c2c',
+    'Merchandise exports to GDP' = '#1e40ca',
+    'Merchandise imports to GDP' = '#00a2ed'
   )
 
 # Plot
-ratio.plot <- ggplot(merchandise) +
+ggplot(merchandise) +
   geom_line(aes(
     x = as.numeric(row.names(merchandise)),
     y = merchGDP,
-    colour = "Merchandise trade to GDP"
+    colour = 'Merchandise trade to GDP'
   )) +
   geom_line(aes(
     x = as.numeric(row.names(merchandise)),
     y = merchExportsGDP,
-    colour = "Merchandise exports to GDP"
+    colour = 'Merchandise exports to GDP'
   )) +
   geom_line(aes(
     x = as.numeric(row.names(merchandise)),
     y = merchImportsGDP,
-    colour = "Merchandise imports to GDP"
+    colour = 'Merchandise imports to GDP'
   )) +
   geom_segment(
     aes(
@@ -97,9 +105,9 @@ ratio.plot <- ggplot(merchandise) +
       xend = 1993,
       y = ratio1.before,
       yend = ratio1.before,
-      color = "Merchandise trade to GDP"
+      colour = 'Merchandise trade to GDP'
     ),
-    linetype = "dashed"
+    linetype = 'dotted'
   ) +
   geom_segment(
     aes(
@@ -107,9 +115,9 @@ ratio.plot <- ggplot(merchandise) +
       xend = 2011,
       y = ratio1.after,
       yend = ratio1.after,
-      color = "Merchandise trade to GDP"
+      colour = 'Merchandise trade to GDP'
     ),
-    linetype = "dashed"
+    linetype = 'dotted'
   ) +
   geom_segment(
     aes(
@@ -117,9 +125,9 @@ ratio.plot <- ggplot(merchandise) +
       xend = 1993,
       y = ratio2.before,
       yend = ratio2.before,
-      color = "Merchandise exports to GDP"
+      colour = 'Merchandise exports to GDP'
     ),
-    linetype = "dashed"
+    linetype = 'dotted'
   ) +
   geom_segment(
     aes(
@@ -127,9 +135,9 @@ ratio.plot <- ggplot(merchandise) +
       xend = 2011,
       y = ratio2.after,
       yend = ratio2.after,
-      color = "Merchandise exports to GDP"
+      colour = 'Merchandise exports to GDP'
     ),
-    linetype = "dashed"
+    linetype = 'dotted'
   ) +
   geom_segment(
     aes(
@@ -137,9 +145,9 @@ ratio.plot <- ggplot(merchandise) +
       xend = 1993,
       y = ratio3.before,
       yend = ratio3.before,
-      color = "Merchandise imports to GDP"
+      colour = 'Merchandise imports to GDP'
     ),
-    linetype = "dashed"
+    linetype = 'dotted'
   ) +
   geom_segment(
     aes(
@@ -147,137 +155,322 @@ ratio.plot <- ggplot(merchandise) +
       xend = 2011,
       y = ratio3.after,
       yend = ratio3.after,
-      color = "Merchandise imports to GDP"
+      colour = 'Merchandise imports to GDP'
     ),
-    linetype = "dashed"
+    linetype = 'dotted'
   ) +
   scale_x_continuous(breaks = seq(1960, 2020, by = 10)) +
-  labs(x = "year", y = "ratio") +
-  scale_colour_manual(name = "Ratios", values = colours) +
+  labs(x = 'year', y = 'ratio') +
+  scale_colour_manual(name = 'Ratios', values = colours) +
   theme_minimal()
-
-ratio.plot
 ```
 
-```{r services, echo=FALSE, fig.fullwidth=TRUE, fig.width=12, fig.height=5.5}
+* Merchandise trade to GDP ratio average before NAFTA: `r ratio1.before`
+* Merchandise trade to GDP ratio average after NAFTA: `r ratio1.after`
+* Merchandise exports to GDP ratio average before NAFTA: `r ratio2.before`
+* Merchandise exports to GDP ratio average after NAFTA: `r ratio2.after`
+* Merchandise imports to GDP ratio average before NAFTA: `r ratio3.before`
+* Merchandise imports to GDP ratio average after NAFTA: `r ratio3.after`
+
+\newpage
+
+**iii.**
+
+```{r services}
 # Important services ratios
-servExportsGDP <- t(merchExports / gdp)
-servImportsGDP <- t(merchImports / gdp)
-servGDP <- t((merchExports  + merchImports) / gdp)
+servExports <- goods_and_servicesExports - merchExports
+servImports <- goods_and_servicesImports - merchImports
+servExportsGDP <- t(servExports / gdp)
+servImportsGDP <- t(servImports / gdp)
+servGDP <- t((servExports  + servImports) / gdp)
 services <- data.frame(servExportsGDP, servImportsGDP, servGDP)
 
 # Mean before and after NAFTA
-ratio1.before <- mean(servGDP[as.character(c(1960:1993)), ])
-ratio1.after <- mean(servGDP[as.character(c(1994:2011)), ])
+ratio4.before <- mean(servGDP[as.character(c(1960:1993)), ])
+ratio4.after <- mean(servGDP[as.character(c(1994:2011)), ])
 
-ratio2.before <- mean(servExportsGDP[as.character(c(1960:1993)), ])
-ratio2.after <- mean(servExportsGDP[as.character(c(1994:2011)), ])
+ratio5.before <- mean(servExportsGDP[as.character(c(1960:1993)), ])
+ratio5.after <- mean(servExportsGDP[as.character(c(1994:2011)), ])
 
-ratio3.before <- mean(servImportsGDP[as.character(c(1960:1993)), ])
-ratio3.after <- mean(servImportsGDP[as.character(c(1994:2011)), ])
+ratio6.before <- mean(servImportsGDP[as.character(c(1960:1993)), ])
+ratio6.after <- mean(servImportsGDP[as.character(c(1994:2011)), ])
 
 colours <-
   c(
-    "services trade to GDP" = "black",
-    "services exports to GDP" = "#bf616a",
-    "services imports to GDP" = "#5e81ac"
+    'Services trade to GDP' = '#051c2c',
+    'Services exports to GDP' = '#1e40ca',
+    'Services imports to GDP' = '#00a2ed'
   )
 
 # Plot
-ratio.plot <- ggplot(services) +
+ggplot(services) +
   geom_line(aes(
     x = as.numeric(row.names(services)),
     y = servGDP,
-    colour = "services trade to GDP"
+    colour = 'Services trade to GDP'
   )) +
   geom_line(aes(
     x = as.numeric(row.names(services)),
     y = servExportsGDP,
-    colour = "services exports to GDP"
+    colour = 'Services exports to GDP'
   )) +
   geom_line(aes(
     x = as.numeric(row.names(services)),
     y = servImportsGDP,
-    colour = "services imports to GDP"
+    colour = 'Services imports to GDP'
   )) +
   geom_segment(
     aes(
       x = 1960,
       xend = 1993,
-      y = ratio1.before,
-      yend = ratio1.before,
-      color = "services trade to GDP"
+      y = ratio4.before,
+      yend = ratio4.before,
+      colour = 'Services trade to GDP'
     ),
-    linetype = "dashed"
+    linetype = 'dotted'
   ) +
   geom_segment(
     aes(
       x = 1994,
       xend = 2011,
-      y = ratio1.after,
-      yend = ratio1.after,
-      color = "services trade to GDP"
+      y = ratio4.after,
+      yend = ratio4.after,
+      colour = 'Services trade to GDP'
     ),
-    linetype = "dashed"
+    linetype = 'dotted'
   ) +
   geom_segment(
     aes(
       x = 1960,
       xend = 1993,
-      y = ratio2.before,
-      yend = ratio2.before,
-      color = "services exports to GDP"
+      y = ratio5.before,
+      yend = ratio5.before,
+      colour = 'Services exports to GDP'
     ),
-    linetype = "dashed"
+    linetype = 'dotted'
   ) +
   geom_segment(
     aes(
       x = 1994,
       xend = 2011,
-      y = ratio2.after,
-      yend = ratio2.after,
-      color = "services exports to GDP"
+      y = ratio5.after,
+      yend = ratio5.after,
+      colour = 'Services exports to GDP'
     ),
-    linetype = "dashed"
+    linetype = 'dotted'
   ) +
   geom_segment(
     aes(
       x = 1960,
       xend = 1993,
-      y = ratio3.before,
-      yend = ratio3.before,
-      color = "services imports to GDP"
+      y = ratio6.before,
+      yend = ratio6.before,
+      colour = 'Services imports to GDP'
     ),
-    linetype = "dashed"
+    linetype = 'dotted'
   ) +
   geom_segment(
     aes(
       x = 1994,
       xend = 2011,
-      y = ratio3.after,
-      yend = ratio3.after,
-      color = "services imports to GDP"
+      y = ratio6.after,
+      yend = ratio6.after,
+      colour = 'Services imports to GDP'
     ),
-    linetype = "dashed"
+    linetype = 'dotted'
   ) +
   scale_x_continuous(breaks = seq(1960, 2020, by = 10)) +
-  labs(x = "year", y = "ratio") +
-  scale_colour_manual(name = "Ratios", values = colours) +
+  labs(x = 'year', y = 'ratio') +
+  scale_colour_manual(name = 'Ratios', values = colours) +
   theme_minimal()
-
-ratio.plot
 ```
 
-```{r data.2, echo=FALSE}
-data.2 <- read.csv("data/WITS.csv")
+* Services trade to GDP ratio average before NAFTA: `r ratio4.before`
+* Services trade to GDP ratio average after NAFTA: `r ratio4.after`
+* Services exports to GDP ratio average before NAFTA: `r ratio5.before`
+* Services exports to GDP ratio average after NAFTA: `r ratio5.after`
+* Services imports to GDP ratio average before NAFTA: `r ratio6.before`
+* Services imports to GDP ratio average after NAFTA: `r ratio6.after`
+
+\newpage
+
+## (b)
+
+```{r data.2}
+data.2 <- read.csv('data/WITS.csv') %>% subset(ProductDescription != '  UN Special Code')
+
+exports.1993 <-
+  data.2 %>% filter(Year == '1993' &
+                      TradeFlowName == 'Export') %>% select(c('TradeValue.in.1000.USD', 'ProductDescription')) %>% arrange(desc(TradeValue.in.1000.USD))
+
+imports.1993 <-
+  data.2 %>% filter(Year == '1993' &
+                      TradeFlowName == 'Import') %>% select(c('TradeValue.in.1000.USD', 'ProductDescription')) %>% arrange(desc(TradeValue.in.1000.USD))
+
+exports.2007 <-
+  data.2 %>% filter(Year == '2007' &
+                      TradeFlowName == 'Export') %>% select(c('TradeValue.in.1000.USD', 'ProductDescription')) %>% arrange(desc(TradeValue.in.1000.USD))
+
+imports.2007 <-
+  data.2 %>% filter(Year == '2007' &
+                      TradeFlowName == 'Import') %>% select(c('TradeValue.in.1000.USD', 'ProductDescription')) %>% arrange(desc(TradeValue.in.1000.USD))
+
+exports.change <-
+  merge(exports.1993, exports.2007, by = 'ProductDescription')
+exports.change <-
+  exports.change %>% add_column(
+    perc.change = (
+      exports.change$TradeValue.in.1000.USD.y / exports.change$TradeValue.in.1000.USD.x
+    ) - 1
+  ) %>% arrange(desc(perc.change))
+
+imports.change <-
+  merge(imports.1993, imports.2007, by = 'ProductDescription')
+imports.change <-
+  imports.change %>% add_column(
+    perc.change = (
+      imports.change$TradeValue.in.1000.USD.y / imports.change$TradeValue.in.1000.USD.x
+    ) - 1
+  )  %>% arrange(desc(perc.change))
 ```
+
+**i.**
+
+Top 10 exported commodities in 1993:
+```{r}
+kable(
+  head(exports.1993, 10),
+  col.names = c('Trade value in $$1000$USD', 'Product'),
+  align = 'cl'
+)
+```
+
+Top 10 exported commodities in 2007:
+```{r}
+kable(
+  head(exports.2007, 10),
+  col.names = c('Trade value in $$1000$USD', 'Product'),
+  align = 'cl'
+)
+```
+
+\newpage
+
+**ii.**
+
+Top 10 imported commodities in 1993:
+```{r}
+kable(
+  head(imports.1993, 10),
+  col.names = c('Trade value in $$1000$USD', 'Product'),
+  align = 'cl'
+)
+```
+
+Top 10 imported commodities in 2007:
+```{r}
+kable(
+  head(imports.2007, 10),
+  col.names = c('Trade value in $$1000$USD', 'Product'),
+  align = 'cl'
+)
+```
+
+\newpage
+
+**iii.**
+
+Top 10 commodities that experienced greatest growth in exports:
+```{r}
+kable(
+  head(exports.change, 10),
+  col.names = c('Product', 'Trade value in 1993', 'Trade value in 2007', 'Percentage change'),
+  align = 'lrrr'
+)
+```
+
+Top 10 commodities that experienced greatest growth in imports:
+```{r}
+kable(
+  head(imports.change, 10),
+  col.names = c('Product', 'Trade value in 1993', 'Trade value in 2007', 'Percentage change'),
+  align = 'lrrr'
+)
+```
+
+\newpage
+
+**iv. and v.**
+
+```{r 1993vpercChange, fig.height=10, fig.width=10}
+colours <-
+  c('Exports' = '#1e40ca',
+    'Imports' = '#00a2ed')
+
+ggplot() + geom_point(
+  aes(
+    x = exports.change$TradeValue.in.1000.USD.x,
+    y = exports.change$perc.change,
+    colour = 'Exports'
+  )
+) +
+  geom_point(
+    aes(
+      x = imports.change$TradeValue.in.1000.USD.x,
+      y = imports.change$perc.change,
+      colour = 'Imports'
+    )
+  ) +
+  scale_x_continuous(trans = 'log10') +
+  scale_y_continuous(trans = 'log10') +
+  labs(caption = '(log scale transformation)',
+       x = '1993',
+       y = 'Percentage change') +
+  scale_colour_manual(name = '', values = colours) +
+  theme_minimal()
+```
+
+```{r}
+corrExports.kendall <-
+  cor(exports.change$TradeValue.in.1000.USD.x,
+      exports.change$perc.change,
+      method = 'kendall')
+corrExports.pearson <-
+  cor(exports.change$TradeValue.in.1000.USD.x,
+      exports.change$perc.change,
+      method = 'pearson')
+corrExports.spearman <-
+  cor(exports.change$TradeValue.in.1000.USD.x,
+      exports.change$perc.change,
+      method = 'spearman')
+
+corrImports.kendall <-
+  cor(imports.change$TradeValue.in.1000.USD.x,
+      imports.change$perc.change,
+      method = 'kendall')
+corrImports.pearson <-
+  cor(imports.change$TradeValue.in.1000.USD.x,
+      imports.change$perc.change,
+      method = 'pearson')
+corrImports.spearman <-
+  cor(imports.change$TradeValue.in.1000.USD.x,
+      imports.change$perc.change,
+      method = 'spearman')
+```
+
+There is almost *no linear relation* between data obtained from 1993 and their percentage change to 2007 as shown with Pearson's $r$ correlations. On the other hand, we can observe weakly **negative** concordant and monotonic relations with Spearman's $\rho$ and Kendall's $\tau$ coefficients.
+
+|         | Pearson's $r$ | Spearman's $\rho$ | Kendall's $\tau$  |
+|:--------|:-------------:|:-----------------:|:-----------------:|
+| Exports | $`r corrExports.pearson`$ | $`r corrExports.spearman`$ | $`r corrExports.kendall`$ |
+| Imports | $`r corrImports.pearson`$ | $`r corrImports.spearman`$ | $`r corrImports.kendall`$ |
 
 \newpage
 
 # Export and import wedges
 
-```{r data.3, echo=FALSE}
-data.3 <- read.csv("data/OECD.csv")
+```{r data.3}
+data.3 <- read.csv('data/OECD.csv')
 ```
 
 \newpage
