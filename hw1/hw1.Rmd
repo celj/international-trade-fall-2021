@@ -17,6 +17,8 @@ library(tufte)
 library(tidyverse)
 library(knitr)
 library(ggcorrplot)
+library(mFilter)
+library(zoo)
 
 knitr::opts_chunk$set(
   cache.extra = packageVersion('tufte'),
@@ -423,7 +425,7 @@ ggplot() + geom_point(
   ) +
   scale_x_continuous(trans = 'log10') +
   scale_y_continuous(trans = 'log10') +
-  labs(caption = '(log scale transformation)',
+  labs(caption = '(log scale transform)',
        x = '1993',
        y = 'Percentage change') +
   scale_colour_manual(name = '', values = colours) +
@@ -458,7 +460,7 @@ corrImports.spearman <-
       method = 'spearman')
 ```
 
-There is almost *no linear relation* between data obtained from 1993 and their percentage change to 2007 as shown with Pearson's $r$ correlations. On the other hand, we can observe weakly **negative** concordant and monotonic relations with Spearman's $\rho$ and Kendall's $\tau$ coefficients.
+There is almost *no linear relation* between data obtained from 1993 and their percentage change to 2007 as shown with Pearson's $r$ correlations. On the other hand, we can observe weakly **negative** monotonic and concordant relations with Spearman's $\rho$ and Kendall's $\tau$ coefficients.
 
 |         | Pearson's $r$ | Spearman's $\rho$ | Kendall's $\tau$  |
 |:--------|:-------------:|:-----------------:|:-----------------:|
@@ -471,6 +473,159 @@ There is almost *no linear relation* between data obtained from 1993 and their p
 
 ```{r data.3}
 data.3 <- read.csv('data/OECD.csv')
+```
+
+```{r importsCAN}
+importsCAN <- data.3 %>%
+  filter(LOCATION == 'CAN',
+         MEASURE == 'GYSA', # GPSA or GYSA ?
+         SUBJECT == 'P7')
+
+hpCAN <- hpfilter(importsCAN$Value, freq = 1600, type = 'lambda')
+
+importsCAN$Trend <- hpCAN$trend
+
+colours <-
+  c('Import wedge' = '#1e40ca',
+    'Trend' = '#00a2ed')
+
+ggplot() +
+  geom_line(aes(
+    x = as.Date(as.yearqtr(importsCAN$TIME, format = '%Y-Q%q')),
+    y = importsCAN$Value,
+    group = 1,
+    colour = 'Import wedge'
+  )) +
+  geom_line(aes(
+    x = as.Date(as.yearqtr(importsCAN$TIME, format = '%Y-Q%q')),
+    y = importsCAN$Trend,
+    group = 1,
+    colour = 'Trend'
+  )) +
+  geom_rect(aes(
+    xmin = as.Date(as.yearqtr('2000-Q4', format = '%Y-Q%q')),
+    xmax = as.Date(as.yearqtr('2002-Q2', format = '%Y-Q%q')),
+    ymin = -30,
+    ymax = 30
+  ), alpha = 0.5) +
+  geom_rect(aes(
+    xmin = as.Date(as.yearqtr('2008-Q3', format = '%Y-Q%q')),
+    xmax = as.Date(as.yearqtr('2009-Q4', format = '%Y-Q%q')),
+    ymin = -30,
+    ymax = 30
+  ), alpha = 0.5) +
+  labs(title = 'Canada',
+       x = 'Quarter',
+       y = 'Percentage Change') +
+  scale_x_date(
+    guide = guide_axis(angle = 90),
+    date_breaks = '1 year',
+    date_labels = '%Y'
+  ) +
+  scale_colour_manual(name = '', values = colours) +
+  theme_minimal()
+```
+
+```{r importsMEX}
+importsMEX <- data.3 %>%
+  filter(LOCATION == 'MEX',
+         MEASURE == 'GYSA',
+         SUBJECT == 'P7')
+
+hpMEX <- hpfilter(importsMEX$Value, freq = 1600, type = 'lambda')
+
+importsMEX$Trend <- hpMEX$trend
+
+colours <-
+  c('Import wedge' = '#1e40ca',
+    'Trend' = '#00a2ed')
+
+ggplot() +
+  geom_line(aes(
+    x = as.Date(as.yearqtr(importsMEX$TIME, format = '%Y-Q%q')),
+    y = importsMEX$Value,
+    group = 1,
+    colour = 'Import wedge'
+  )) +
+  geom_line(aes(
+    x = as.Date(as.yearqtr(importsMEX$TIME, format = '%Y-Q%q')),
+    y = importsMEX$Trend,
+    group = 1,
+    colour = 'Trend'
+  )) +
+  geom_rect(aes(
+    xmin = as.Date(as.yearqtr('1994-Q4', format = '%Y-Q%q')),
+    xmax = as.Date(as.yearqtr('1996-Q1', format = '%Y-Q%q')),
+    ymin = -30,
+    ymax = 30
+  ), alpha = 0.5) +
+  geom_rect(aes(
+    xmin = as.Date(as.yearqtr('2008-Q3', format = '%Y-Q%q')),
+    xmax = as.Date(as.yearqtr('2009-Q4', format = '%Y-Q%q')),
+    ymin = -30,
+    ymax = 30
+  ), alpha = 0.5) +
+  labs(title = 'Mexico',
+       x = 'Quarter',
+       y = 'Percentage Change') +
+  scale_x_date(
+    guide = guide_axis(angle = 90),
+    date_breaks = '1 year',
+    date_labels = '%Y'
+  ) +
+  scale_colour_manual(name = '', values = colours) +
+  theme_minimal()
+```
+
+```{r importsUSA}
+importsUSA <- data.3 %>%
+  filter(LOCATION == 'USA',
+         MEASURE == 'GYSA',
+         SUBJECT == 'P7')
+
+hpUSA <- hpfilter(importsUSA$Value, freq = 1600, type = 'lambda')
+
+importsUSA$Trend <- hpUSA$trend
+
+colours <-
+  c('Import wedge' = '#1e40ca',
+    'Trend' = '#00a2ed')
+
+ggplot() +
+  geom_line(aes(
+    x = as.Date(as.yearqtr(importsUSA$TIME, format = '%Y-Q%q')),
+    y = importsUSA$Value,
+    group = 1,
+    colour = 'Import wedge'
+  )) +
+  geom_line(aes(
+    x = as.Date(as.yearqtr(importsUSA$TIME, format = '%Y-Q%q')),
+    y = importsUSA$Trend,
+    group = 1,
+    colour = 'Trend'
+  )) +
+  geom_rect(aes(
+    xmin = as.Date(as.yearqtr('2001-Q2', format = '%Y-Q%q')),
+    xmax = as.Date(as.yearqtr('2002-Q2', format = '%Y-Q%q')),
+    ymin = -30,
+    ymax = 30
+  ), alpha = 0.5) +
+  geom_rect(aes(
+    xmin = as.Date(as.yearqtr('2008-Q1', format = '%Y-Q%q')),
+    xmax = as.Date(as.yearqtr('2010-Q1', format = '%Y-Q%q')),
+    ymin = -30,
+    ymax = 30
+  ), alpha = 0.5) +
+  labs(title = 'United States of America',
+       x = 'Quarter',
+       y = 'Percentage Change') +
+  scale_x_date(
+    guide = guide_axis(angle = 90),
+    date_breaks = '1 year',
+    date_labels = '%Y'
+  ) +
+  scale_colour_manual(name = '', values = colours) +
+  theme_minimal()
 ```
 
 \newpage
