@@ -592,8 +592,8 @@ detrend <-
       ),
       alpha = 0.5) +
       labs(title = country,
-           x = 'Quarter',
-           y = 'Percentage Change') +
+           x = '',
+           y = '') +
       scale_x_date(
         guide = guide_axis(angle = 90),
         date_breaks = '1 year',
@@ -638,6 +638,36 @@ detrend(
     date.4 = '2010-Q4'
 )
 ```
+
+\newpage
+
+We computed the imports model prediction by the least squares method. Given
+
+$$
+Y = \gamma + \sigma P
+$$
+
+where
+
+$$
+\begin{aligned}
+Y &= \log X_{t,m}^{\text{obs}} - \log Y_t, \\
+\gamma &= \log \alpha \cdot \mathbf{1} = \log \alpha_m \cdot 1,\ \text{and} \\
+P &= \log P_t - \log P_{t,m};
+\end{aligned}
+$$
+
+let $B = \left( \mathbf{1}, P \right)$. Thus, we can estimate
+
+$$
+\binom{\log \hat{\alpha}}{\hat{\sigma}} = \left( B^T B \right)^{-1} B^T Y.
+$$
+
+Plus, with our predictions $\displaystyle \log X_{t,m}^{\text{pred}} = B \cdot \binom{\log \hat{\alpha}}{\hat{\sigma}} + \log Y_t$, import wedges were defined as follows:
+
+$$
+\tau_t = \log X_{t,m}^{\text{obs}} - \log X_{t,m}^{\text{pred}}.
+$$
 
 \newpage
 
