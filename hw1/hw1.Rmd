@@ -16,6 +16,8 @@ link-citations: yes
 library(tufte)
 library(tidyverse)
 library(knitr)
+library(expm)
+library(matlib)
 library(ggcorrplot)
 library(mFilter)
 library(zoo)
@@ -473,159 +475,168 @@ There is almost *no linear relation* between data obtained from 1993 and their p
 
 ```{r data.3}
 data.3 <- read.csv('data/OECD.csv')
+
+detrend <-
+  function(country,
+           index,
+           date.1,
+           date.2,
+           date.3,
+           date.4) {
+    data <- data.3 %>% filter(LOCATION == index)
+    
+    GDP_CQRSA <- data %>%
+      filter(SUBJECT == 'B1_GE',
+             MEASURE == 'CQRSA') %>%
+      subset(select = c('TIME', 'Value'))
+    
+    imports_CQRSA <- data %>%
+      filter(SUBJECT == 'P7',
+             MEASURE == 'CQRSA') %>%
+      subset(select = c('TIME', 'Value'))
+    
+    GDP_DNBSA <- data %>%
+      filter(SUBJECT == 'B1_GE',
+             MEASURE == 'DNBSA') %>%
+      subset(select = c('TIME', 'Value'))
+    
+    imports_DNBSA <- data %>%
+      filter(SUBJECT == 'P7',
+             MEASURE == 'DNBSA') %>%
+      subset(select = c('TIME', 'Value'))
+    
+    # Data
+    
+    GDP <- data.frame(
+      quarter = GDP_CQRSA$TIME,
+      nominal = GDP_CQRSA$Value,
+      real = GDP_CQRSA$Value / GDP_DNBSA$Value,
+      deflactor = GDP_DNBSA$Value / 100
+    )
+    
+    imports <- data.frame(
+      quarter = imports_CQRSA$TIME,
+      nominal = imports_CQRSA$Value,
+      real = imports_CQRSA$Value / imports_DNBSA$Value,
+      deflactor = imports_DNBSA$Value / 100
+    )
+    
+    # log data
+    
+    log_GDP <- data.frame(
+      quarter = GDP$quarter,
+      nominal = log(GDP$nominal),
+      real = log(GDP$real),
+      deflactor = log(GDP$deflactor)
+    )
+    
+    log_imports <- data.frame(
+      quarter = imports$quarter,
+      nominal = log(imports$nominal),
+      real = log(imports$real),
+      deflactor = log(imports$deflactor)
+    )
+    
+    # Linear regression prediction
+    logQ <- log_imports$real - log_GDP$real
+    logX0 <- integer(length = length(logQ)) + 1
+    logX1 <- GDP$deflactor - imports$deflactor
+    
+    X <- cbind(logX0, logX1)
+    
+    # Parameter estimation
+    b <- inv(crossprod(X)) %*% (t(X) %*% logQ)
+    
+    # Prediction
+    logQhat <- X %*% b
+    log_imports$realPredicted <- logQhat + log_GDP$real
+    
+    # Import wedge
+    log_imports$wedge <-
+      log_imports$real - log_imports$realPredicted
+    
+    # Detrended data
+    hp <-
+      hpfilter(log_imports$wedge, freq = 1600, type = 'lambda')
+    log_imports$trend <- hp$trend
+    
+    # Plot
+    colours <- c('Import wedge' = '#1e40ca',
+                 'Trend' = '#00a2ed')
+    
+    p <- ggplot() +
+      geom_line(aes(
+        x = as.Date(as.yearqtr(log_imports$quarter, format = '%Y-Q%q')),
+        y = log_imports$wedge,
+        group = 1,
+        colour = 'Import wedge'
+      )) +
+      geom_line(aes(
+        x = as.Date(as.yearqtr(log_imports$quarter, format = '%Y-Q%q')),
+        y = log_imports$trend,
+        group = 1,
+        colour = 'Trend'
+      )) +
+      geom_rect(aes(
+        xmin = as.Date(as.yearqtr(date.1, format = '%Y-Q%q')),
+        xmax = as.Date(as.yearqtr(date.2, format = '%Y-Q%q')),
+        ymin = min(log_imports$wedge),
+        ymax = max(log_imports$wedge)
+      ),
+      alpha = 0.5) +
+      geom_rect(aes(
+        xmin = as.Date(as.yearqtr(date.3, format = '%Y-Q%q')),
+        xmax = as.Date(as.yearqtr(date.4, format = '%Y-Q%q')),
+        ymin = min(log_imports$wedge),
+        ymax = max(log_imports$wedge)
+      ),
+      alpha = 0.5) +
+      labs(title = country,
+           x = 'Quarter',
+           y = 'Percentage Change') +
+      scale_x_date(
+        guide = guide_axis(angle = 90),
+        date_breaks = '1 year',
+        date_labels = '%Y'
+      ) +
+      scale_colour_manual(name = '', values = colours) +
+      theme_minimal()
+    
+    return(p)
+  }
 ```
 
 ```{r importsCAN}
-importsCAN <- data.3 %>%
-  filter(LOCATION == 'CAN',
-         MEASURE == 'GYSA', # GPSA or GYSA ?
-         SUBJECT == 'P7')
-
-hpCAN <- hpfilter(importsCAN$Value, freq = 1600, type = 'lambda')
-
-importsCAN$Trend <- hpCAN$trend
-
-colours <-
-  c('Import wedge' = '#1e40ca',
-    'Trend' = '#00a2ed')
-
-ggplot() +
-  geom_line(aes(
-    x = as.Date(as.yearqtr(importsCAN$TIME, format = '%Y-Q%q')),
-    y = importsCAN$Value,
-    group = 1,
-    colour = 'Import wedge'
-  )) +
-  geom_line(aes(
-    x = as.Date(as.yearqtr(importsCAN$TIME, format = '%Y-Q%q')),
-    y = importsCAN$Trend,
-    group = 1,
-    colour = 'Trend'
-  )) +
-  geom_rect(aes(
-    xmin = as.Date(as.yearqtr('2000-Q4', format = '%Y-Q%q')),
-    xmax = as.Date(as.yearqtr('2002-Q2', format = '%Y-Q%q')),
-    ymin = -30,
-    ymax = 30
-  ), alpha = 0.5) +
-  geom_rect(aes(
-    xmin = as.Date(as.yearqtr('2008-Q3', format = '%Y-Q%q')),
-    xmax = as.Date(as.yearqtr('2009-Q4', format = '%Y-Q%q')),
-    ymin = -30,
-    ymax = 30
-  ), alpha = 0.5) +
-  labs(title = 'Canada',
-       x = 'Quarter',
-       y = 'Percentage Change') +
-  scale_x_date(
-    guide = guide_axis(angle = 90),
-    date_breaks = '1 year',
-    date_labels = '%Y'
-  ) +
-  scale_colour_manual(name = '', values = colours) +
-  theme_minimal()
+detrend(
+    country = 'Canada',
+    index = 'CAN',
+    date.1 = '2001-Q2',
+    date.2 = '2002-Q3',
+    date.3 = '2008-Q4',
+    date.4 = '2010-Q3'
+)
 ```
 
 ```{r importsMEX}
-importsMEX <- data.3 %>%
-  filter(LOCATION == 'MEX',
-         MEASURE == 'GYSA',
-         SUBJECT == 'P7')
-
-hpMEX <- hpfilter(importsMEX$Value, freq = 1600, type = 'lambda')
-
-importsMEX$Trend <- hpMEX$trend
-
-colours <-
-  c('Import wedge' = '#1e40ca',
-    'Trend' = '#00a2ed')
-
-ggplot() +
-  geom_line(aes(
-    x = as.Date(as.yearqtr(importsMEX$TIME, format = '%Y-Q%q')),
-    y = importsMEX$Value,
-    group = 1,
-    colour = 'Import wedge'
-  )) +
-  geom_line(aes(
-    x = as.Date(as.yearqtr(importsMEX$TIME, format = '%Y-Q%q')),
-    y = importsMEX$Trend,
-    group = 1,
-    colour = 'Trend'
-  )) +
-  geom_rect(aes(
-    xmin = as.Date(as.yearqtr('1994-Q4', format = '%Y-Q%q')),
-    xmax = as.Date(as.yearqtr('1996-Q1', format = '%Y-Q%q')),
-    ymin = -30,
-    ymax = 30
-  ), alpha = 0.5) +
-  geom_rect(aes(
-    xmin = as.Date(as.yearqtr('2008-Q3', format = '%Y-Q%q')),
-    xmax = as.Date(as.yearqtr('2009-Q4', format = '%Y-Q%q')),
-    ymin = -30,
-    ymax = 30
-  ), alpha = 0.5) +
-  labs(title = 'Mexico',
-       x = 'Quarter',
-       y = 'Percentage Change') +
-  scale_x_date(
-    guide = guide_axis(angle = 90),
-    date_breaks = '1 year',
-    date_labels = '%Y'
-  ) +
-  scale_colour_manual(name = '', values = colours) +
-  theme_minimal()
+detrend(
+    country = 'Mexico',
+    index = 'MEX',
+    date.1 = '1994-Q4',
+    date.2 = '1997-Q3',
+    date.3 = '2008-Q3',
+    date.4 = '2010-Q2'
+)
 ```
 
 ```{r importsUSA}
-importsUSA <- data.3 %>%
-  filter(LOCATION == 'USA',
-         MEASURE == 'GYSA',
-         SUBJECT == 'P7')
-
-hpUSA <- hpfilter(importsUSA$Value, freq = 1600, type = 'lambda')
-
-importsUSA$Trend <- hpUSA$trend
-
-colours <-
-  c('Import wedge' = '#1e40ca',
-    'Trend' = '#00a2ed')
-
-ggplot() +
-  geom_line(aes(
-    x = as.Date(as.yearqtr(importsUSA$TIME, format = '%Y-Q%q')),
-    y = importsUSA$Value,
-    group = 1,
-    colour = 'Import wedge'
-  )) +
-  geom_line(aes(
-    x = as.Date(as.yearqtr(importsUSA$TIME, format = '%Y-Q%q')),
-    y = importsUSA$Trend,
-    group = 1,
-    colour = 'Trend'
-  )) +
-  geom_rect(aes(
-    xmin = as.Date(as.yearqtr('2001-Q2', format = '%Y-Q%q')),
-    xmax = as.Date(as.yearqtr('2002-Q2', format = '%Y-Q%q')),
-    ymin = -30,
-    ymax = 30
-  ), alpha = 0.5) +
-  geom_rect(aes(
-    xmin = as.Date(as.yearqtr('2008-Q1', format = '%Y-Q%q')),
-    xmax = as.Date(as.yearqtr('2010-Q1', format = '%Y-Q%q')),
-    ymin = -30,
-    ymax = 30
-  ), alpha = 0.5) +
-  labs(title = 'United States of America',
-       x = 'Quarter',
-       y = 'Percentage Change') +
-  scale_x_date(
-    guide = guide_axis(angle = 90),
-    date_breaks = '1 year',
-    date_labels = '%Y'
-  ) +
-  scale_colour_manual(name = '', values = colours) +
-  theme_minimal()
+detrend(
+    country = 'United States of America',
+    index = 'USA',
+    date.1 = '2001-Q2',
+    date.2 = '2004-Q2',
+    date.3 = '2008-Q4',
+    date.4 = '2010-Q4'
+)
 ```
 
 \newpage
