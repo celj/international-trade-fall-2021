@@ -4,7 +4,7 @@ runningheader: 'Assignment 1'
 author: |
   Carlos Lezama, Marco Hinojosa, \
   Luis Jiménez and Antonio Carbonell
-date: 'October 27th, 2021'
+date: 'October 27, 2021'
 output:
   tufte::tufte_handout:
     citation_package: natbib
