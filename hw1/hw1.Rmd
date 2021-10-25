@@ -661,7 +661,7 @@ $$
 \tau_t = x_{t,m}^{\text{obs}} - x_{t,m}^{\text{pred}}.
 $$
 
-> Remember that both the data and the estimator of $\alpha_m$, $\hat{\alpha}_m$, are scaled logarithmically.
+> Remember that both the data and the estimate of $\alpha_m$, $\hat{\alpha}_m$, are scaled logarithmically.
 
 \newpage
 
