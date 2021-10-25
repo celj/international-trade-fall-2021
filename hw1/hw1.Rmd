@@ -644,30 +644,24 @@ detrend(
 We computed the imports model prediction by the least squares method. Given
 
 $$
-Y = \gamma + \sigma P
+x_{t,m}^{\text{obs}} - y_t = \alpha_m + \sigma (p_t - p_{t, m}),
 $$
 
-where
+we can estimate
 
 $$
-\begin{aligned}
-Y &= \log X_{t,m}^{\text{obs}} - \log Y_t, \\
-\gamma &= \log \alpha \cdot \mathbf{1} = \log \alpha_m \cdot 1,\ \text{and} \\
-P &= \log P_t - \log P_{t,m};
-\end{aligned}
+\binom{\hat{\alpha}_m}{\hat{\sigma}} = \left( X^T X \right)^{-1} X^T Y
 $$
 
-let $B = \left( \mathbf{1}, P \right)$. Thus, we can estimate
+where $X = \left[\mathbf{1}, p - p_m\right]_{t \times 2}$ and $Y = \left[ x_m^{\text{obs}} - y \right]_{t \times 1}$.
+
+Thus, with our predictions $x_{t,m}^{\text{pred}} = X \cdot \left(\hat{\alpha}_m,\ \hat{\sigma}\right)^T + y_t$, import wedges were defined as follows:
 
 $$
-\binom{\log \hat{\alpha}}{\hat{\sigma}} = \left( B^T B \right)^{-1} B^T Y.
+\tau_t = x_{t,m}^{\text{obs}} - x_{t,m}^{\text{pred}}.
 $$
 
-Plus, with our predictions $\displaystyle \log X_{t,m}^{\text{pred}} = B \cdot \binom{\log \hat{\alpha}}{\hat{\sigma}} + \log Y_t$, import wedges were defined as follows:
-
-$$
-\tau_t = \log X_{t,m}^{\text{obs}} - \log X_{t,m}^{\text{pred}}.
-$$
+> Remember that all data and estimators are on a logarithmic scale.
 
 \newpage
 
