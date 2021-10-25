@@ -661,18 +661,16 @@ $$
 \tau_t = x_{t,m}^{\text{obs}} - x_{t,m}^{\text{pred}}.
 $$
 
-> Remember that both the data and the estimate of $\alpha_m$, $\hat{\alpha}_m$, are scaled logarithmically.
-
 Plus, we used the following variables:
 
 | $\log(\cdot)$ |   Data    |
 |:-------------:|----------:|
 | $p$   | GDP deflator      |
-| $p_m$ | Imports deflator  |
 | $y$   | Volume of GDP     |
+| $p_m$ | Imports deflator  |
 | $x_m$ | Volume of imports |
 
-> The volume of GDP was measured at constant prices.
+> Remember that both the data and the estimate of $\alpha_m$, $\hat{\alpha}_m$, are scaled logarithmically. Furthermore, the volumes of GDP and imports were measured at constant prices.
 
 \newpage
 
