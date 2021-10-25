@@ -663,6 +663,17 @@ $$
 
 > Remember that both the data and the estimate of $\alpha_m$, $\hat{\alpha}_m$, are scaled logarithmically.
 
+Plus, we used the following variables:
+
+| $\log(\cdot)$ |   Data    |
+|:-------------:|----------:|
+| $p$   | GDP deflator      |
+| $p_m$ | Imports deflator  |
+| $y$   | Volume of GDP     |
+| $x_m$ | Volume of imports |
+
+> The volume of GDP was measured at constant prices.
+
 \newpage
 
 # Heckscher–Ohlin
