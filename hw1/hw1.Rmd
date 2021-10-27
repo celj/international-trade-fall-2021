@@ -476,14 +476,13 @@ There is almost *no linear relation* between data obtained from 1993 and their p
 ```{r data.3}
 data.3 <- read.csv('data/OECD.csv')
 
-detrend <-
+importsWedge <-
   function(country,
-           index,
            date.1,
            date.2,
            date.3,
            date.4) {
-    data <- data.3 %>% filter(LOCATION == index)
+    data <- data.3 %>% filter(Country == country)
     
     GDP_CQRSA <- data %>%
       filter(SUBJECT == 'B1_GE',
@@ -606,10 +605,19 @@ detrend <-
   }
 ```
 
+```{r importsARG}
+importsWedge(
+    country = 'Argentina',
+    date.1 = NA,
+    date.2 = NA,
+    date.3 = '2008-Q3',
+    date.4 = '2010-Q2'
+)
+```
+
 ```{r importsCAN}
-detrend(
+importsWedge(
     country = 'Canada',
-    index = 'CAN',
     date.1 = '2001-Q2',
     date.2 = '2002-Q3',
     date.3 = '2008-Q4',
@@ -618,9 +626,8 @@ detrend(
 ```
 
 ```{r importsMEX}
-detrend(
+importsWedge(
     country = 'Mexico',
-    index = 'MEX',
     date.1 = '1994-Q4',
     date.2 = '1997-Q3',
     date.3 = '2008-Q3',
@@ -629,9 +636,8 @@ detrend(
 ```
 
 ```{r importsUSA}
-detrend(
-    country = 'United States of America',
-    index = 'USA',
+importsWedge(
+    country = 'United States',
     date.1 = '2001-Q2',
     date.2 = '2004-Q2',
     date.3 = '2008-Q4',
