@@ -8,7 +8,9 @@ date: 'October 27, 2021'
 output:
   tufte::tufte_handout:
     citation_package: natbib
-bibliography: skeleton.bib
+header-includes:
+  - \usepackage{pdfpages}
+bibliography: references.bib
 link-citations: yes
 ---
 
@@ -39,7 +41,7 @@ knitr::opts_chunk$set(
 options(htmltools.dir.version = FALSE)
 ```
 
-# Patterns of trade
+# Patterns of trade^[Data obtained from @databank and @wits.]
 
 ## (a)
 
@@ -340,21 +342,21 @@ imports.change <-
 
 **i.**
 
-Top 10 exported commodities in 1993:
 ```{r}
 kable(
   head(exports.1993, 10),
   col.names = c('Trade value in $$1000$USD', 'Product'),
-  align = 'cl'
+  align = 'cl',
+  caption = 'Top $10$ exported commodities in $1993$'
 )
 ```
 
-Top 10 exported commodities in 2007:
 ```{r}
 kable(
   head(exports.2007, 10),
   col.names = c('Trade value in $$1000$USD', 'Product'),
-  align = 'cl'
+  align = 'cl',
+  caption = 'Top $10$ exported commodities in $2007$'
 )
 ```
 
@@ -362,21 +364,21 @@ kable(
 
 **ii.**
 
-Top 10 imported commodities in 1993:
 ```{r}
 kable(
   head(imports.1993, 10),
   col.names = c('Trade value in $$1000$USD', 'Product'),
-  align = 'cl'
+  align = 'cl',
+  caption = 'Top $10$ imported commodities in $1993$'
 )
 ```
 
-Top 10 imported commodities in 2007:
 ```{r}
 kable(
   head(imports.2007, 10),
   col.names = c('Trade value in $$1000$USD', 'Product'),
-  align = 'cl'
+  align = 'cl',
+  caption = 'Top $10$ imported commodities in $2007$'
 )
 ```
 
@@ -384,21 +386,21 @@ kable(
 
 **iii.**
 
-Top 10 commodities that experienced greatest growth in exports:
 ```{r}
 kable(
   head(exports.change, 10),
-  col.names = c('Product', 'Trade value in 1993', 'Trade value in 2007', 'Percentage change'),
-  align = 'lrrr'
+  col.names = c('Product', 'Trade value in $1993$', 'Trade value in $2007$', 'Percentage change'),
+  align = 'lrrr',
+  caption = 'Top $10$ commodities that experienced greatest growth in exports'
 )
 ```
 
-Top 10 commodities that experienced greatest growth in imports:
 ```{r}
 kable(
   head(imports.change, 10),
-  col.names = c('Product', 'Trade value in 1993', 'Trade value in 2007', 'Percentage change'),
-  align = 'lrrr'
+  col.names = c('Product', 'Trade value in $1993$', 'Trade value in $2007$', 'Percentage change'),
+  align = 'lrrr',
+  caption = 'Top $10$ commodities that experienced greatest growth in imports'
 )
 ```
 
@@ -471,7 +473,7 @@ There is almost *no linear relation* between data obtained from 1993 and their p
 
 \newpage
 
-# Export and import wedges
+# Export and import wedges^[Data obtained from @oecd]
 
 ```{r data.3}
 data.3 <- read.csv('data/OECD.csv')
@@ -678,12 +680,12 @@ Plus, we used the following variables:
 
 > Remember that both the data and the estimate of $\alpha_m$, $\hat{\alpha}_m$, are scaled logarithmically. Furthermore, the volumes of GDP and imports were measured at constant prices.
 
+Mexican and Argentinian economies show a similar behavior around the financial crisis of $2008$, since both present import wedges below the expected trend. On the other hand, it is interesting to analyze how Mexico's wedge in $1995$ is below the trend while Argentina's wedge in $2018$ is above its own. These two economies reacted differently towards their devaluations. It is also important to mention that the fall of the $1995$ import wedge of Mexico is a fall from an increasing trend, while Argentina increases in its wedge, it is a higher import wedge from a decreasing trend.
+
+> See the **theoretical part** on the next page.
+
+\includepdf[pages={-}]{Heckscher-Ohlin.pdf}
+
 \newpage
 
-# Heckscher–Ohlin
-
-\newpage
-
-```{r bib, include=FALSE}
-knitr::write_bib(c('base', 'rmarkdown'), file = 'skeleton.bib')
-```
+# References
