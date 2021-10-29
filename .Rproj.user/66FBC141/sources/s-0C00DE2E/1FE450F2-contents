@@ -392,6 +392,8 @@ kable(
 
 Like exports, the trade value of the top 10 imported commodities increased after NAFTA. The first place changed from valves to telecommunications equipment, but the composition remained substantially the same.
 
+It is easy to see how preferences do not change, but the composition of exports does after economic openness or a greater focus on US and Canadian consumer preferences.
+
 \newpage
 
 **iii.**
@@ -483,7 +485,7 @@ There is almost *no linear relation* between data obtained from 1993 and their p
 
 \newpage
 
-# Export and import wedges^[Data obtained from @oecd]
+# Export and import wedges^[Data obtained from the @oecd]
 
 ```{r data.3}
 data.3 <- read.csv('data/OECD.csv')

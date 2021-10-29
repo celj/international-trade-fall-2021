@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/Debian) (preloaded format=pdflatex 2021.9.1)  29 OCT 2021 14:21
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/Debian) (preloaded format=pdflatex 2021.9.1)  29 OCT 2021 14:28
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -778,44 +778,44 @@ Package pdftex.def Info: hw1_files/figure-latex/services-1.pdf  used on input l
 ine 124.
 (pdftex.def)             Requested size: 480.00842pt x 238.87212pt.
 [2 <./hw1_files/figure-latex/services-1.pdf>] [3] [4]
-Underfull \hbox (badness 10000) in paragraph at lines 266--266
+Underfull \hbox (badness 10000) in paragraph at lines 270--270
 []\T1/pplj/m/n/10 Table 5: Top $\OT1/pplx/m/n/10 10$ \T1/pplj/m/n/10 com-modi-t
 ies that ex-pe-ri-enced great-est growth in
  []
 
 
-Overfull \hbox (97.05981pt too wide) in alignment at lines 264--271
+Overfull \hbox (97.05981pt too wide) in alignment at lines 268--275
  [] [] [] [] 
  []
 
 
-Overfull \hbox (97.05981pt too wide) in alignment at lines 271--276
+Overfull \hbox (97.05981pt too wide) in alignment at lines 275--280
  [] [] [] [] 
  []
 
 
-Overfull \hbox (97.05981pt too wide) in alignment at lines 276--288
+Overfull \hbox (97.05981pt too wide) in alignment at lines 280--292
  [] [] [] [] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 292--292
+Underfull \hbox (badness 10000) in paragraph at lines 296--296
 []\T1/pplj/m/n/10 Table 6: Top $\OT1/pplx/m/n/10 10$ \T1/pplj/m/n/10 com-modi-t
 ies that ex-pe-ri-enced great-est growth in
  []
 
 
-Overfull \hbox (96.31978pt too wide) in alignment at lines 290--297
+Overfull \hbox (96.31978pt too wide) in alignment at lines 294--301
  [] [] [] [] 
  []
 
 
-Overfull \hbox (96.31978pt too wide) in alignment at lines 297--302
+Overfull \hbox (96.31978pt too wide) in alignment at lines 301--306
  [] [] [] [] 
  []
 
 
-Overfull \hbox (96.31978pt too wide) in alignment at lines 302--314
+Overfull \hbox (96.31978pt too wide) in alignment at lines 306--318
  [] [] [] [] 
  []
 
@@ -824,26 +824,26 @@ Overfull \hbox (96.31978pt too wide) in alignment at lines 302--314
 File: hw1_files/figure-latex/1993vpercChange-1.pdf Graphic file (type pdf)
 <use hw1_files/figure-latex/1993vpercChange-1.pdf>
 Package pdftex.def Info: hw1_files/figure-latex/1993vpercChange-1.pdf  used on 
-input line 321.
+input line 325.
 (pdftex.def)             Requested size: 480.01842pt x 482.05238pt.
 [6 <./hw1_files/figure-latex/1993vpercChange-1.pdf>] [7]
 <hw1_files/figure-latex/importsARG-1.pdf, id=90, 838.13126pt x 410.53375pt>
 File: hw1_files/figure-latex/importsARG-1.pdf Graphic file (type pdf)
 <use hw1_files/figure-latex/importsARG-1.pdf>
 Package pdftex.def Info: hw1_files/figure-latex/importsARG-1.pdf  used on input
- line 346.
+ line 350.
 (pdftex.def)             Requested size: 479.99062pt x 235.10916pt.
 <hw1_files/figure-latex/importsCAN-1.pdf, id=91, 838.13126pt x 410.53375pt>
 File: hw1_files/figure-latex/importsCAN-1.pdf Graphic file (type pdf)
 <use hw1_files/figure-latex/importsCAN-1.pdf>
 Package pdftex.def Info: hw1_files/figure-latex/importsCAN-1.pdf  used on input
- line 349.
+ line 353.
 (pdftex.def)             Requested size: 479.99062pt x 235.10916pt.
 <hw1_files/figure-latex/importsMEX-1.pdf, id=92, 838.13126pt x 410.53375pt>
 File: hw1_files/figure-latex/importsMEX-1.pdf Graphic file (type pdf)
 <use hw1_files/figure-latex/importsMEX-1.pdf>
 Package pdftex.def Info: hw1_files/figure-latex/importsMEX-1.pdf  used on input
- line 352.
+ line 356.
 (pdftex.def)             Requested size: 479.99062pt x 235.10916pt.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
@@ -852,7 +852,7 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 File: hw1_files/figure-latex/importsUSA-1.pdf Graphic file (type pdf)
 <use hw1_files/figure-latex/importsUSA-1.pdf>
 Package pdftex.def Info: hw1_files/figure-latex/importsUSA-1.pdf  used on input
- line 355.
+ line 359.
 (pdftex.def)             Requested size: 479.99062pt x 235.10916pt.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
@@ -866,7 +866,7 @@ pdfTeX warning: pdflatex (file ./Heckscher-Ohlin.pdf): PDF inclusion: found PDF
 <Heckscher-Ohlin.pdf, id=145, 602.25pt x 851.18pt>
 File: Heckscher-Ohlin.pdf Graphic file (type pdf)
 <use Heckscher-Ohlin.pdf>
-Package pdftex.def Info: Heckscher-Ohlin.pdf  used on input line 417.
+Package pdftex.def Info: Heckscher-Ohlin.pdf  used on input line 421.
 (pdftex.def)             Requested size: 312.0139pt x 440.97966pt.
 
 
@@ -874,7 +874,7 @@ pdfTeX warning: pdflatex (file ./Heckscher-Ohlin.pdf): PDF inclusion: found PDF
  version <1.7>, but at most version <1.5> allowed
 File: Heckscher-Ohlin.pdf Graphic file (type pdf)
 <use Heckscher-Ohlin.pdf>
-Package pdftex.def Info: Heckscher-Ohlin.pdf  used on input line 417.
+Package pdftex.def Info: Heckscher-Ohlin.pdf  used on input line 421.
 (pdftex.def)             Requested size: 312.0139pt x 440.97966pt.
 
 
@@ -887,24 +887,24 @@ pdfTeX warning: pdflatex (file ./Heckscher-Ohlin.pdf): PDF inclusion: found PDF
 <Heckscher-Ohlin.pdf, id=148, page=1, 602.25pt x 851.18pt>
 File: Heckscher-Ohlin.pdf Graphic file (type pdf)
 <use Heckscher-Ohlin.pdf, page 1>
-Package pdftex.def Info: Heckscher-Ohlin.pdf , page1 used on input line 417.
+Package pdftex.def Info: Heckscher-Ohlin.pdf , page1 used on input line 421.
 (pdftex.def)             Requested size: 602.24852pt x 851.1779pt.
 File: Heckscher-Ohlin.pdf Graphic file (type pdf)
 <use Heckscher-Ohlin.pdf, page 1>
-Package pdftex.def Info: Heckscher-Ohlin.pdf , page1 used on input line 417.
+Package pdftex.def Info: Heckscher-Ohlin.pdf , page1 used on input line 421.
 (pdftex.def)             Requested size: 562.59546pt x 795.13492pt.
 [10]
 File: Heckscher-Ohlin.pdf Graphic file (type pdf)
 <use Heckscher-Ohlin.pdf, page 1>
-Package pdftex.def Info: Heckscher-Ohlin.pdf , page1 used on input line 417.
+Package pdftex.def Info: Heckscher-Ohlin.pdf , page1 used on input line 421.
 (pdftex.def)             Requested size: 562.59546pt x 795.13492pt.
 File: Heckscher-Ohlin.pdf Graphic file (type pdf)
 <use Heckscher-Ohlin.pdf, page 1>
-Package pdftex.def Info: Heckscher-Ohlin.pdf , page1 used on input line 417.
+Package pdftex.def Info: Heckscher-Ohlin.pdf , page1 used on input line 421.
 (pdftex.def)             Requested size: 562.59546pt x 795.13492pt.
 File: Heckscher-Ohlin.pdf Graphic file (type pdf)
 <use Heckscher-Ohlin.pdf, page 1>
-Package pdftex.def Info: Heckscher-Ohlin.pdf , page1 used on input line 417.
+Package pdftex.def Info: Heckscher-Ohlin.pdf , page1 used on input line 421.
 (pdftex.def)             Requested size: 562.59546pt x 795.13492pt.
 [11 <./Heckscher-Ohlin.pdf>]
 
@@ -913,15 +913,15 @@ pdfTeX warning: pdflatex (file ./Heckscher-Ohlin.pdf): PDF inclusion: found PDF
 <Heckscher-Ohlin.pdf, id=164, page=2, 602.25pt x 851.18pt>
 File: Heckscher-Ohlin.pdf Graphic file (type pdf)
 <use Heckscher-Ohlin.pdf, page 2>
-Package pdftex.def Info: Heckscher-Ohlin.pdf , page2 used on input line 417.
+Package pdftex.def Info: Heckscher-Ohlin.pdf , page2 used on input line 421.
 (pdftex.def)             Requested size: 562.59546pt x 795.13492pt.
 File: Heckscher-Ohlin.pdf Graphic file (type pdf)
 <use Heckscher-Ohlin.pdf, page 2>
-Package pdftex.def Info: Heckscher-Ohlin.pdf , page2 used on input line 417.
+Package pdftex.def Info: Heckscher-Ohlin.pdf , page2 used on input line 421.
 (pdftex.def)             Requested size: 562.59546pt x 795.13492pt.
 File: Heckscher-Ohlin.pdf Graphic file (type pdf)
 <use Heckscher-Ohlin.pdf, page 2>
-Package pdftex.def Info: Heckscher-Ohlin.pdf , page2 used on input line 417.
+Package pdftex.def Info: Heckscher-Ohlin.pdf , page2 used on input line 421.
 (pdftex.def)             Requested size: 562.59546pt x 795.13492pt.
 [12 <./Heckscher-Ohlin.pdf>]
 
@@ -930,15 +930,15 @@ pdfTeX warning: pdflatex (file ./Heckscher-Ohlin.pdf): PDF inclusion: found PDF
 <Heckscher-Ohlin.pdf, id=172, page=3, 602.25pt x 851.18pt>
 File: Heckscher-Ohlin.pdf Graphic file (type pdf)
 <use Heckscher-Ohlin.pdf, page 3>
-Package pdftex.def Info: Heckscher-Ohlin.pdf , page3 used on input line 417.
+Package pdftex.def Info: Heckscher-Ohlin.pdf , page3 used on input line 421.
 (pdftex.def)             Requested size: 562.59546pt x 795.13492pt.
 File: Heckscher-Ohlin.pdf Graphic file (type pdf)
 <use Heckscher-Ohlin.pdf, page 3>
-Package pdftex.def Info: Heckscher-Ohlin.pdf , page3 used on input line 417.
+Package pdftex.def Info: Heckscher-Ohlin.pdf , page3 used on input line 421.
 (pdftex.def)             Requested size: 562.59546pt x 795.13492pt.
 File: Heckscher-Ohlin.pdf Graphic file (type pdf)
 <use Heckscher-Ohlin.pdf, page 3>
-Package pdftex.def Info: Heckscher-Ohlin.pdf , page3 used on input line 417.
+Package pdftex.def Info: Heckscher-Ohlin.pdf , page3 used on input line 421.
 (pdftex.def)             Requested size: 562.59546pt x 795.13492pt.
 [13 <./Heckscher-Ohlin.pdf>] (./hw1.bbl
 LaTeX Font Info:    Trying to load font information for T1+fvm on input line 12
@@ -975,7 +975,7 @@ j8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/bera/fvmr8a.pfb></usr
 /share/texlive/texmf-dist/fonts/type1/urw/palatino/uplb8a.pfb></usr/share/texli
 ve/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></usr/share/texlive/texmf-dis
 t/fonts/type1/urw/palatino/uplri8a.pfb>
-Output written on hw1.pdf (14 pages, 1202417 bytes).
+Output written on hw1.pdf (14 pages, 1202548 bytes).
 PDF statistics:
  235 PDF objects out of 1000 (max. 8388607)
  174 compressed objects within 2 object streams
