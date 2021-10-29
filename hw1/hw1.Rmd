@@ -476,12 +476,14 @@ corrImports.spearman <-
       method = 'spearman')
 ```
 
-There is almost *no linear relation* between data obtained from $1993$ and their percentage change to $2007$ as shown with Pearson's $r$ correlations. On the other hand, we can observe weakly **negative** monotonic and concordant relations with Spearman's $\rho$ and Kendall's $\tau$ coefficients.
-
 |         | Pearson's $r$ | Spearman's $\rho$ | Kendall's $\tau$  |
 |:--------|:-------------:|:-----------------:|:-----------------:|
 | Exports | $`r corrExports.pearson`$ | $`r corrExports.spearman`$ | $`r corrExports.kendall`$ |
 | Imports | $`r corrImports.pearson`$ | $`r corrImports.spearman`$ | $`r corrImports.kendall`$ |
+
+\newpage
+
+There is almost *no linear relation* between data obtained from $1993$ and their percentage change to $2007$ as shown with Pearson's $r$ correlations. On the other hand, we can observe weakly **negative** monotonic and concordant relations with Spearman's $\rho$ and Kendall's $\tau$ coefficients.
 
 \newpage
 
