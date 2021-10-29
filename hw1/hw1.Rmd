@@ -615,7 +615,8 @@ importsWedge <-
         date_labels = '%Y'
       ) +
       scale_colour_manual(name = '', values = colours) +
-      theme_minimal()
+      theme_minimal() +
+      theme(legend.position = "bottom")
     
     return(p)
   }
@@ -624,10 +625,10 @@ importsWedge <-
 ```{r importsARG}
 importsWedge(
     country = 'Argentina',
-    date.1 = NA,
-    date.2 = NA,
-    date.3 = '2008-Q3',
-    date.4 = '2010-Q2'
+    date.1 = '2008-Q3',
+    date.2 = '2010-Q2',
+    date.3 = '2014-Q1',
+    date.4 = '2016-Q4'
 )
 ```
 
