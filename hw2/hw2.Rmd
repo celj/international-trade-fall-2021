@@ -19,12 +19,14 @@ library(tidyverse)
 knitr::opts_chunk$set(
   cache.extra = packageVersion('tufte'),
   cache = TRUE,
-  fig.height = 8,
+  echo = FALSE,
+  fig.fullwidth = TRUE,
+  fig.height = 6,
   fig.pos = '!h',
-  fig.width = 8,
+  fig.width = 12,
   message = FALSE,
   out.extra = '',
-  out.width = '75%',
+  out.width = '100%',
   warning = FALSE
 )
 
@@ -37,8 +39,24 @@ options(htmltools.dir.version = FALSE)
 
 # Data section
 
-\newpage
+```{r}
+source('src.R')
 
-```{r bib, include=FALSE}
-knitr::write_bib(c('base', 'rmarkdown'), file = 'skeleton.bib')
+ggplot() +
+  geom_line(aes(
+    x = gl.ALL3$year,
+    y = gl.ALL3$index,
+    colour = 'Three-digit SITC'
+  )) +
+  geom_line(aes(
+    x = gl.ALL5$year,
+    y = gl.ALL5$index,
+    colour = 'Five-digit SITC'
+  )) +
+  theme_minimal() +
+  labs(title = 'Grubel and Lloyd Index Weighted Average',
+       x = 'year',
+       y = NULL) +
+  scale_colour_manual(name = '', values = colours) +
+  scale_x_continuous(breaks = seq(1990, 2010, 2))
 ```

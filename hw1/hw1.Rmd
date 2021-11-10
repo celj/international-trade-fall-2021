@@ -28,7 +28,7 @@ knitr::opts_chunk$set(
   cache.extra = packageVersion('tufte'),
   cache = FALSE,
   echo = FALSE,
-  fig.fullwidth=TRUE,
+  fig.fullwidth = TRUE,
   fig.height = 6,
   fig.pos = '!h',
   fig.width = 12,
