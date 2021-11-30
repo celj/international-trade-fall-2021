@@ -56,7 +56,7 @@ time.1 <- system.time({
                         prod = j,
                         ratio = ratio)
             
-            # cat(i, j, '\n')
+            cat(i, j, '\n')
         }
     }
 })
@@ -85,13 +85,13 @@ time.2 <- system.time({
                         prod = j,
                         ratio = ratio)
             
-            # cat(i, j, '\n')
+            cat(i, j, '\n')
         }
     }
 })
 
-# time.1
-# time.2
+time.1
+time.2
 
 gl.ALL3 <- aggregate(. ~ year, trade.ALL3[-2], mean)
 gl.ALL3$index <- 1 - gl.ALL3$ratio
@@ -102,20 +102,20 @@ gl.ALL5$index <- 1 - gl.ALL5$ratio
 colours <- c('Three-digit SITC' = '#1e40ca',
              'Five-digit SITC' = '#00a2ed')
 
-# ggplot() +
-#     geom_line(aes(
-#         x = gl.ALL3$year,
-#         y = gl.ALL3$index,
-#         colour = 'Three-digit SITC'
-#     )) +
-#     geom_line(aes(
-#         x = gl.ALL5$year,
-#         y = gl.ALL5$index,
-#         colour = 'Five-digit SITC'
-#     )) +
-#     theme_minimal() +
-#     labs(title = 'Grubel and Lloyd Index Weighted Average',
-#          x = 'year',
-#          y = NULL) +
-#     scale_colour_manual(name = '', values = colours) +
-#     scale_x_continuous(breaks = seq(1990, 2010, 2))
+ggplot() +
+    geom_line(aes(
+        x = gl.ALL3$year,
+        y = gl.ALL3$index,
+        colour = 'Three-digit SITC'
+    )) +
+    geom_line(aes(
+        x = gl.ALL5$year,
+        y = gl.ALL5$index,
+        colour = 'Five-digit SITC'
+    )) +
+    theme_minimal() +
+    labs(title = 'Grubel and Lloyd Index Weighted Average',
+         x = 'year',
+         y = NULL) +
+    scale_colour_manual(name = '', values = colours) +
+    scale_x_continuous(breaks = seq(1990, 2010, 2))
