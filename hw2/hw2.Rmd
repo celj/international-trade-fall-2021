@@ -8,6 +8,8 @@ date: 'November 30, 2021'
 output:
   tufte::tufte_handout:
     citation_package: natbib
+header-includes:
+  - \usepackage{pdfpages}
 bibliography: skeleton.bib
 link-citations: yes
 ---
@@ -18,7 +20,7 @@ library(tidyverse)
 
 knitr::opts_chunk$set(
   cache.extra = packageVersion('tufte'),
-  cache = TRUE,
+  cache = FALSE,
   echo = FALSE,
   fig.fullwidth = TRUE,
   fig.height = 6,
@@ -33,14 +35,13 @@ knitr::opts_chunk$set(
 options(htmltools.dir.version = FALSE)
 ```
 
-# Theoretical section
-
-\newpage
-
 # Data section
 
 ```{r}
 source('src.R')
+
+colours <- c('Three-digit SITC' = '#1e40ca',
+             'Five-digit SITC' = '#00a2ed')
 
 ggplot() +
   geom_line(aes(
@@ -60,3 +61,9 @@ ggplot() +
   scale_colour_manual(name = '', values = colours) +
   scale_x_continuous(breaks = seq(1990, 2010, 2))
 ```
+
+In general, the share of imports and exports is very similar in each industry or they offset each other, as we can see with three-digit SITC. Nevertheless, this difference increases as our labels (product cohorts) increase with five-digit SITC. Therefore, we can conclude that there are some products we only import / export. Actually, it is not hard to observe that even variability increases. In the medium term, there is some stability probably strongly related to NAFTA, which can be reflected in an observable decrease in variability after 1994.
+
+> See the **theoretical part** on the next page.
+
+\includepdf[pages={-}]{theo.pdf}
